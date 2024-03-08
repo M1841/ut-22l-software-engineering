@@ -30,7 +30,7 @@
         <!-- name appended to standard jar name to indicate shaded/executable version -->
         <shadedClassifierName>executable</shadedClassifierName>
         <junit-version>4.13.1</junit-version>
-        <java.compile-verison>1.8</java.compile-verison>
+        <java.compile-version>1.8</java.compile-version>
         <slf4j-version>1.7.25</slf4j-version>
     </properties>
 
@@ -66,8 +66,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.1</version>
                 <configuration>
-                    <source>${java.compile-verison}</source>
-                    <target>${java.compile-verison}</target>
+                    <source>${java.compile-version}</source>
+                    <target>${java.compile-version}</target>
                     <!-- sometimes the IDE does not reveal all the important warning -->
                     <compilerArgument>-Xlint:all</compilerArgument>
                     <showWarnings>true</showWarnings>
