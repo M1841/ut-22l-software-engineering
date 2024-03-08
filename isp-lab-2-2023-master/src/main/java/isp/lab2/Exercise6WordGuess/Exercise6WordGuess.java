@@ -1,6 +1,6 @@
 package isp.lab2.Exercise6WordGuess;
 
-import java.util.Scanner;
+import java.util.*;
 
 public class Exercise6WordGuess {
 
@@ -12,22 +12,48 @@ public class Exercise6WordGuess {
      * @return
      */
     public static int[] getOccurrencePositions(char c, char[] word) {
-        return null;
+        List<Integer> result = new ArrayList<>();
+
+        for(int i = 0; i < word.length; i++) {
+            char letter = word[i];
+            if(letter == c) result.add(i);
+        }
+
+        return result.stream().mapToInt(i -> i).toArray();
     }
 
     public static void main(String[] args) {
-        char[] word = null; // replace with a word from a dictionary
+
+        String word_as_str = "EARLY"; // today's Wordle solution
+        char[] word = word_as_str.toCharArray();
         boolean solved = false;
         Scanner scanner = new Scanner(System.in);
 
         int tries = 0;
+        int correct_letters = 0;
         while (tries < 10 && !solved) {
             tries++;
-            System.out.println("Enter a letter: ");
-            String letter = scanner.nextLine();
+            System.out.print("Enter a letter: ");
+            String letter = scanner.nextLine().toUpperCase();
             int[] occurrences = getOccurrencePositions(letter.charAt(0), word);
-            // todo: continue the implementation
+
+
+            if(occurrences.length == 0) {
+                System.out.println("Word doesn't contain the letter " + letter);
+            }
+            else {
+                System.out.print("The letter " + letter + " appears at index" + (occurrences.length > 1 ? "es:" : ":"));
+                for(Integer occurrence: occurrences) System.out.print(" " + occurrence);
+                System.out.println();
+
+                correct_letters += occurrences.length;
+                if(correct_letters == word.length) solved = true;
+            }
+
         }
+
+        System.out.println((solved ? "You've guessed the word " : "You've reached " +
+                "the maximum amount of tries. The word was ") + word_as_str);
     }
 
 }
