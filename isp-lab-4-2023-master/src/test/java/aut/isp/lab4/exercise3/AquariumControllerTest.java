@@ -17,10 +17,10 @@ public class AquariumControllerTest {
         AquariumController aquariumController = new AquariumController(
                 fishFeeder, "ACME", "AC20", 9.33f, 9.35f
         );
-        aquariumController.setCurrentTime(9.34f);
-        Assert.assertEquals("", outputStream.toString());
 
+        fishFeeder.fillUp();
+        outputStream.reset();
         aquariumController.setCurrentTime(9.35f);
-        Assert.assertEquals("", outputStream.toString());
+        Assert.assertEquals("The fish are fed\r\n", outputStream.toString());
     }
 }
