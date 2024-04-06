@@ -1,7 +1,11 @@
 package isp.lab5.exercise3;
 
-public class Exercise3 {
-  public static void main(String[] args) {
+import org.junit.Assert;
+import org.junit.Test;
+
+public class Exercise3Test {
+  @Test
+  public void testBehavior() {
     Sensor[] sensors = new Sensor[10];
     sensors[0] = new TemperatureSensor("Room 1", "Temperature Sensor 1", 25.0);
     sensors[1] = new TemperatureSensor("Room 2", "Temperature Sensor 2", 26.0);
@@ -16,7 +20,7 @@ public class Exercise3 {
 
     MonitoringService monitoringService = new MonitoringService(sensors);
 
-    System.out.println("Average temperature sensors: " + monitoringService.getAverageTemperatureSensors());
-    System.out.println("Average all sensors: " + monitoringService.getAverageAllSensors());
+    Assert.assertEquals(27.0, monitoringService.getAverageTemperatureSensors(), 0.0);
+    Assert.assertEquals(514.5, monitoringService.getAverageAllSensors(), 0.0);
   }
 }

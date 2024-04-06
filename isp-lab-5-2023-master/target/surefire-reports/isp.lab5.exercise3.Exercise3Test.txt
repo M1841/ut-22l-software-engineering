@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
-Test set: isp.lab5.exercise1.Exercise1Test
+Test set: isp.lab5.exercise3.Exercise3Test
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.089 sec - in isp.lab5.exercise1.Exercise1Test
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 sec - in isp.lab5.exercise3.Exercise3Test
