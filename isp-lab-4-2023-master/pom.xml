@@ -26,7 +26,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- class that has the main method -->
-        <mainClass>lab.template.Example</mainClass>
+        <mainClass>aut.isp.lab4.exercise4.Exercise4</mainClass>
         <!-- name appended to standard jar name to indicate shaded/executable version -->
         <shadedClassifierName>executable</shadedClassifierName>
         <junit-version>4.13.1</junit-version>
@@ -101,28 +101,28 @@
                 </executions>
             </plugin>
 
-<!--            <plugin>-->
-<!--                &lt;!&ndash; executes the program &ndash;&gt;-->
-<!--                <groupId>org.codehaus.mojo</groupId>-->
-<!--                <artifactId>exec-maven-plugin</artifactId>-->
-<!--                <version>1.3.1</version>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <id>default-cli</id>-->
-<!--                        <goals>-->
-<!--                            &lt;!&ndash; java runs the code from the main class &ndash;&gt;-->
-<!--                            <goal>java</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--                <configuration>-->
-<!--                    &lt;!&ndash; used by java goal &ndash;&gt;-->
-<!--                    <mainClass>${mainClass}</mainClass>-->
-<!--                    &lt;!&ndash; used by exec goal &ndash;&gt;-->
-<!--                    <executable>${java.home}/bin/java</executable>-->
-<!--                    <commandlineArgs>-jar ${project.build.directory}/${project.build.finalName}-${shadedClassifierName}.jar arg1 arg2</commandlineArgs>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
+           <plugin>
+               <!-- &lt;!&ndash; executes the program &ndash;&gt; -->
+               <groupId>org.codehaus.mojo</groupId>
+               <artifactId>exec-maven-plugin</artifactId>
+               <version>1.3.1</version>
+               <executions>
+                   <execution>
+                       <id>default-cli</id>
+                       <goals>
+                           <!-- &lt;!&ndash; java runs the code from the main class &ndash;&gt; -->
+                           <goal>java</goal>
+                       </goals>
+                   </execution>
+               </executions>
+               <configuration>
+                   <!-- &lt;!&ndash; used by java goal &ndash;&gt; -->
+                   <mainClass>${mainClass}</mainClass>
+                   <!-- &lt;!&ndash; used by exec goal &ndash;&gt; -->
+                   <executable>${java.home}/bin/java</executable>
+                   <commandlineArgs>-jar ${project.build.directory}/${project.build.finalName}-${shadedClassifierName}.jar arg1 arg2</commandlineArgs>
+               </configuration>
+           </plugin>
 
             <plugin>
                 <!-- Executes JUnit tests and writes the results as an xml and txt file -->
