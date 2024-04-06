@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="isp.lab5.exercise2.Exercise2Test" time="0" tests="3" errors="0" skipped="0" failures="0">
+<testsuite name="isp.lab5.exercise2.Exercise2Test" time="0.015" tests="3" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
     <property name="java.vm.version" value="21.0.2+13-LTS"/>
@@ -61,7 +61,7 @@
     <property name="java.vendor.version" value="Temurin-21.0.2+13"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase name="testLaptopCharge" classname="isp.lab5.exercise2.Exercise2Test" time="0"/>
+  <testcase name="testLaptopCharge" classname="isp.lab5.exercise2.Exercise2Test" time="0.015"/>
   <testcase name="testWatchCharge" classname="isp.lab5.exercise2.Exercise2Test" time="0"/>
   <testcase name="testPhoneCharge" classname="isp.lab5.exercise2.Exercise2Test" time="0"/>
 </testsuite>
