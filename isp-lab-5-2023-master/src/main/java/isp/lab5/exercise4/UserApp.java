@@ -1,6 +1,8 @@
 package isp.lab5.exercise4;
 
-public class UserApp {
+import java.util.Random;
+
+public class UserApp extends App {
   // Attributes
   private String ticket;
 
@@ -10,7 +12,21 @@ public class UserApp {
   }
 
   // Methods
-  public int buyTicket(TicketManager ticketManager, int balance) {
+  @Override
+  public String generateTicket() {
+    Random random = new Random();
+    String ticket = String.valueOf(random.nextLong(1000000000, Long.MAX_VALUE));
+    tickets.add(ticket);
+    return ticket;
+  }
+
+  @Override
+  public TicketValidity validateTicket(String ticket) {
+    System.out.println("Regular users cannot validate tickets");
+    return null;
+  }
+
+  public int buyTicket(int balance) {
     if (ticket != null) {
       System.out.println("You already have a ticket");
       return balance;
@@ -19,7 +35,7 @@ public class UserApp {
     if (balance < 10) {
       System.out.println("Insufficient funds");
     } else {
-      ticket = ticketManager.generateTicket();
+      ticket = generateTicket();
       balance -= 10;
       System.out.println("Ticket bought successfully");
     }
