@@ -12,14 +12,16 @@ Implement a safe home access Java application based on the diagram above. Consid
 5. When the tenant already exists (verify the name), _addTenant_ method will throw TenantAlreadyExistsException.
 6. When the tenant is not found, _removeTenant_ method will throw TenantNotFoundException. 
 7. All attempts (successful or not) will be logged in access log list.
-8. A console based user interface should be implemented for the above system. The first promt should allow the selection of the user type, Admin or Tenant.
+8. A console based user interface should be implemented for the above system. The 
+   first prompt should allow the selection of the user type, Admin or Tenant.
 The Tenant should only be able to enter the pin in order to open/close the door.
-The Admin should be able to add and to remove tenants, and to view the acess logs. 
+The Admin should be able to add and to remove tenants, and to view the access logs. 
 
 **NOTE - The Java project comes with predefined unit tests. You should make sure all tests pass. You are not allowed to change unit tests (except for the initialisation of Controller object in the _instantiateDoorController()_ method**).
 
 
 ## Exercise 2 - Use case diagram
+![Exercise 2 image](docs/ex2.jpg)
 
 Create the _UML use case_ diagram for the Safe Home Access application. 
 

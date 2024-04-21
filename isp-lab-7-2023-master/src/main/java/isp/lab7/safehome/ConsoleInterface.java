@@ -26,7 +26,7 @@ public class ConsoleInterface {
           } catch (InvalidPinException err) {
             System.out.println("Invalid pin");
           } catch (TooManyAttemptsException err) {
-            System.out.println("Too many attempts");
+            System.out.println("Too many failed attempts");
           }
         }
         case 2 -> {
@@ -74,7 +74,7 @@ public class ConsoleInterface {
               } catch (InvalidPinException err) {
                 System.out.println("Invalid pin");
               } catch (TooManyAttemptsException err) {
-                System.out.println("Too may attempts");
+                System.out.println("Too many failed attempts");
               }
             }
             case 4 -> System.out.println(controller.getAccessLogs());
@@ -85,7 +85,6 @@ public class ConsoleInterface {
         case 0 -> exit1 = true;
         default -> System.out.println("Invalid option. Please try again.");
       }
-
 
     }
   }
