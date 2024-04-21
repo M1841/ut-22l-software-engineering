@@ -4,13 +4,14 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class DoorLockController implements ControllerInterface {
   // Attributes
   private Map<Tenant, AccessKey> validAccess;
   private int failedAttempts;
-  private Door door;
-  private List<AccessLog> accessLogs;
+  private final Door door;
+  private final List<AccessLog> accessLogs;
 
   // Getters & Setters
   public Map<Tenant, AccessKey> getValidAccess() {
@@ -38,7 +39,7 @@ public class DoorLockController implements ControllerInterface {
       throws InvalidPinException, TooManyAttemptsException {
 
     if (failedAttempts >= 3) {
-      if (pin == MASTER_KEY) {
+      if (Objects.equals(pin, MASTER_KEY)) {
         failedAttempts = 0;
 
         if (door.getStatus() == DoorStatus.OPEN) {

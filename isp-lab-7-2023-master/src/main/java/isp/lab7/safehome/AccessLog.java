@@ -64,4 +64,17 @@ public class AccessLog {
     this.doorStatus = doorStatus;
     this.errorMessage = errorMessage;
   }
+
+  // Methods
+
+  @Override
+  public String toString() {
+    return "AccessLog{" +
+        "tenantName='" + tenantName + '\'' +
+        ", dateTime=" + dateTime +
+        ", operation='" + operation + '\'' +
+        ", doorStatus=" + doorStatus +
+        ", errorMessage='" + errorMessage + '\'' +
+        '}';
+  }
 }
