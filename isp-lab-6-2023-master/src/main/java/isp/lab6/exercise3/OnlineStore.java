@@ -10,6 +10,11 @@ public class OnlineStore {
   private List<Product> products;
   private Map<String, ActiveSession> sessions;
 
+  // Getters & Setters
+  public Map<String, ActiveSession> getSessions() {
+    return sessions;
+  }
+
   // Constructors
   public OnlineStore(List<Product> products, Map<String, ActiveSession> sessions) {
     this.products = products;

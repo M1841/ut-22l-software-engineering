@@ -5,24 +5,13 @@ import java.util.Map;
 
 public class ActiveSession {
   // Attributes
-  private String username;
-  private Map<Product, Integer> cart;
+  private final String username;
+  private final Map<Product, Integer> cart;
 
   // Getters & Setters
-  public String getUsername() {
-    return username;
-  }
-
-  public void setUsername(String username) {
-    this.username = username;
-  }
 
   public Map<Product, Integer> getCart() {
     return cart;
-  }
-
-  public void setCart(Map<Product, Integer> cart) {
-    this.cart = cart;
   }
 
   // Constructors
@@ -41,20 +30,20 @@ public class ActiveSession {
   }
 
   public String checkout() {
-    String receipt = "Receipt for " + username + ":\n";
+    StringBuilder receipt = new StringBuilder("Receipt for " + username + ":\n");
     double total = 0;
 
     for (Map.Entry<Product, Integer> entry : cart.entrySet()) {
       double currentPrice = entry.getKey().price * entry.getValue();
 
       total += currentPrice;
-      receipt += entry.getKey().name + " * " + entry.getValue() + " = " + currentPrice + "\n";
+      receipt.append(entry.getKey().name).append(" * ").append(entry.getValue()).append(" = ").append(String.format("%.2f", currentPrice)).append("\n");
     }
 
-    receipt += "Total: " + total;
+    receipt.append("Total: ").append(String.format("%.2f", total));
 
     cart.clear();
 
-    return receipt;
+    return receipt.toString();
   }
 }

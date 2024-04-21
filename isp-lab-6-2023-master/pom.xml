@@ -26,7 +26,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- class that has the main method -->
-        <mainClass>isp.lab6.exercise2.Exercise2</mainClass>
+        <mainClass>isp.lab6.exercise3.Exercise3</mainClass>
         <!-- name appended to standard jar name to indicate shaded/executable version -->
         <shadedClassifierName>executable</shadedClassifierName>
         <junit-version>4.12</junit-version>
@@ -66,8 +66,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.1</version>
                 <configuration>
-                    <source>${java.compile-verison}</source>
-                    <target>${java.compile-verison}</target>
+                    <source>14</source>
+                    <target>14</target>
                     <!-- sometimes the IDE does not reveal all the important warning -->
                     <compilerArgument>-Xlint:all</compilerArgument>
                     <showWarnings>true</showWarnings>

@@ -1,5 +1,7 @@
 package isp.lab6.exercise3;
 
+import java.util.Objects;
+
 public class User {
   // Attributes
   private String username;
@@ -29,22 +31,17 @@ public class User {
   }
 
   // Methods
+
   @Override
-  public boolean equals(Object obj) {
-    if (this == obj) {
-      return true;
-    }
-    if (obj == null || getClass() != obj.getClass()) {
-      return false;
-    }
-    User user = (User) obj;
-    return username.equals(user.username) && password.equals(user.password);
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    User user = (User) o;
+    return Objects.equals(username, user.username) && Objects.equals(password, user.password);
   }
 
   @Override
   public int hashCode() {
-    int result = username.hashCode();
-    result = 31 * result + password.hashCode();
-    return result;
+    return Objects.hash(username, password);
   }
 }

@@ -1,5 +1,6 @@
 package isp.lab6.exercise3;
 
+import java.util.Objects;
 import java.util.Set;
 
 public class LoginSystem {
@@ -29,7 +30,7 @@ public class LoginSystem {
 
   public boolean login(String username, String password) {
     for (User user : users) {
-      if (user.getUsername() == username && user.getPassword() == password) {
+      if (Objects.equals(user.getUsername(), username) && Objects.equals(user.getPassword(), password)) {
         store.addSession(username);
         return true;
       }
