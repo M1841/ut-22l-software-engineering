@@ -1,12 +1,14 @@
 package isp.lab8.airways;
 
+import java.io.*;
+import java.nio.file.*;
 import java.util.*;
 import lombok.*;
 
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
 @Getter
-public class Waypoint {
+public class Waypoint extends JsonSerializable<Waypoint> {
   private int index;
   private String name;
   private double latitude;
@@ -41,6 +43,13 @@ public class Waypoint {
     int altitude = scanner.nextInt();
 
     return new Waypoint(index, name, latitude, longitude, altitude);
+  }
+
+  public static void remove(String directory, String name) throws IOException {
+    Waypoint.fromJson(directory, name, Waypoint.class);
+
+    Path waypointPath = Paths.get(FileSystem.getPath(directory, name, true));
+    Files.delete(waypointPath);
   }
 
   @Override

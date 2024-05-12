@@ -1,7 +1,7 @@
 package isp.lab8.airways;
 
-import com.fasterxml.jackson.databind.*;
 import java.io.*;
+import java.nio.file.*;
 import java.util.*;
 import java.util.stream.*;
 import lombok.*;
@@ -9,7 +9,7 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
 @Getter
-public class Route {
+public class Route extends JsonSerializable<Route> {
   private String name;
   private ArrayList<Waypoint> waypoints;
 
@@ -41,27 +41,46 @@ public class Route {
     return new Route(name, waypoints);
   }
 
-  public static Route fromJson(String directory, String name) throws IOException {
-    String path = String.format(
-        "%s\\%s.json",
-        directory, name);
+  public static Route fromDirectory(String directory, String name) throws IOException {
+    ArrayList<Waypoint> waypoints = new ArrayList<>();
 
-    String jsonContent = FileReader.readAllLines(path).stream().collect(Collectors.joining("\n"));
+    for (String waypointName : FileSystem.getFilesInDirectory(directory + "\\" + name)) {
+      waypointName = waypointName.split("[.]", 0)[0];
+      waypoints.add(Waypoint.fromJson(directory + "\\" + name, waypointName, Waypoint.class));
+    }
+    waypoints.sort((a, b) -> a.getIndex() - b.getIndex());
 
-    ObjectMapper objectMapper = new ObjectMapper();
-
-    return objectMapper.readValue(jsonContent, Route.class);
+    return new Route(name, waypoints);
   }
 
-  public void toJson(String directory) throws IOException {
-    String path = String.format(
-        "%s\\%s.json",
-        directory, this.name);
+  public void toDirectory(String directory) throws IOException {
+    String routeDirectory = FileSystem.getDirectory(directory + "\\" + this.name);
 
-    FileWriter fileWriter = new FileWriter(path);
-    ObjectMapper objectMapper = new ObjectMapper();
+    for (Waypoint waypoint : this.waypoints) {
+      waypoint.toJson(routeDirectory, waypoint.getName());
+    }
+  }
 
-    objectMapper.writeValue(fileWriter, this);
+  public static void remove(String directory, String name) throws IOException {
+    Route route = Route.fromDirectory(directory, name);
+    String routeDirectory = FileSystem.getPath(directory, name, false);
+
+    for (Waypoint waypoint : route.waypoints) {
+      Waypoint.remove(routeDirectory, waypoint.getName());
+    }
+
+    Path routePath = Paths.get(routeDirectory);
+    Files.delete(routePath);
+  }
+
+  public static ArrayList<Route> allFromDirectory(String directory) throws IOException {
+    ArrayList<Route> routes = new ArrayList<>();
+
+    for (String routeName : FileSystem.getFilesInDirectory(directory)) {
+      routes.add(Route.fromDirectory(directory, routeName));
+    }
+
+    return routes;
   }
 
   @Override

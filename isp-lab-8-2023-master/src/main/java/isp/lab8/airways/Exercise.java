@@ -1,7 +1,6 @@
 package isp.lab8.airways;
 
 import java.io.*;
-import java.nio.file.*;
 import java.util.*;
 
 public class Exercise {
@@ -10,8 +9,8 @@ public class Exercise {
 
     final Scanner scanner = new Scanner(System.in);
 
-    String appDirectory = getDirectory(System.getenv("LOCALAPPDATA") + "\\airways");
-    String routesDirectory = getDirectory(appDirectory + "\\routes");
+    String appDirectory = FileSystem.getDirectory(System.getenv("LOCALAPPDATA") + "\\airways");
+    String routesDirectory = FileSystem.getDirectory(appDirectory + "\\routes");
 
     do {
       System.out.println("1 - Add a route");
@@ -26,8 +25,9 @@ public class Exercise {
       switch (option) {
         case 1 -> {
           Route route = Route.fromConsole(scanner);
+
           try {
-            route.toJson(routesDirectory);
+            route.toDirectory(routesDirectory);
             System.out.println("Route was added successfully");
           } catch (IOException err) {
             System.err.println(err);
@@ -36,43 +36,43 @@ public class Exercise {
         case 2 -> {
           System.out.print("Route name: ");
           String name = scanner.next();
+
           try {
-            Route route = Route.fromJson(routesDirectory, name);
+            Route route = Route.fromDirectory(routesDirectory, name);
             System.out.println(route);
           } catch (IOException err) {
             System.err.println(err);
+          } catch (NullPointerException err) {
+            System.out.println("Couldn't find route");
           }
         }
         case 3 -> {
           System.out.print("Route name: ");
           String name = scanner.next();
           try {
-            Route.fromJson(routesDirectory, name);
-
-            Path routePath = Paths.get(String.format(
-                "%s\\%s.json",
-                routesDirectory, name));
-
-            Files.delete(routePath);
-            System.out.println("Route was added successfully");
+            Route.remove(routesDirectory, name);
+            System.out.println("Route was deleted successfully");
           } catch (IOException err) {
+            System.err.println(err);
+          } catch (NullPointerException err) {
+            System.out.println("Couldn't find route");
+          }
+        }
+        case 4 -> {
+          try {
+            ArrayList<Route> routes = Route.allFromDirectory(routesDirectory);
+            routes.forEach(route -> {
+              System.out.println(route);
+            });
+          } catch (Exception err) {
             System.err.println(err);
           }
         }
+        case 0 -> System.out.println("Exiting");
+        default -> System.out.println("Invalid option, try again");
       }
     } while (option != 0);
 
     scanner.close();
-
-  }
-
-  private static String getDirectory(String path) {
-    File directory = new File(path);
-
-    if (!directory.isDirectory()) {
-      directory.mkdir();
-    }
-
-    return path;
   }
 }
