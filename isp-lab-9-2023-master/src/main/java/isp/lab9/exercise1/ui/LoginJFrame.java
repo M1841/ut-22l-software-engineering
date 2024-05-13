@@ -1,10 +1,7 @@
 package isp.lab9.exercise1.ui;
 
 import javax.swing.*;
-import java.util.HashMap;
-import java.util.Map;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.util.*;
 import org.mindrot.jbcrypt.BCrypt;
 
 /**

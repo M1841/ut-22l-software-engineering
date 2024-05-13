@@ -25,4 +25,9 @@ public class StockItem {
   private String currency;
   private String exchange;
   private String name;
+  private int quantity;
+
+  public BigDecimal getTotalPrice() {
+    return price.multiply(BigDecimal.valueOf(quantity));
+  }
 }

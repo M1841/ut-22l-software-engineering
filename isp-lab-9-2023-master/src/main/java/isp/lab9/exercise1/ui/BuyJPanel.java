@@ -28,7 +28,7 @@ public class BuyJPanel extends JPanel {
 
     JLabel symbolLabel = new JLabel("Symbol:");
     JComboBox<String> symbolComboBox = new JComboBox<>();
-    symbolComboBox.setModel(new DefaultComboBoxModel(mainFrame.getMarketService().getSymbols()));
+    symbolComboBox.setModel(new DefaultComboBoxModel<>(mainFrame.getMarketService().getSymbols()));
 
     JLabel quantityLabel = new JLabel("Quantity:");
     JTextField quantityTextField = new JTextField();

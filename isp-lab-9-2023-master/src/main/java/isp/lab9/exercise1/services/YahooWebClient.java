@@ -40,7 +40,7 @@ public class YahooWebClient {
 
   private static List<StockItem> getQuotes(String query) throws IOException {
     initializeCrumb();
-    Map<String, String> params = new LinkedHashMap();
+    Map<String, String> params = new LinkedHashMap<>();
     params.put("symbols", query);
     params.put("crumb", crumb);
     String url = QUOTES_QUERY1V7_BASE_URL + "?" + Utils.getURLParameters(params);

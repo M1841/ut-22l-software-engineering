@@ -7,7 +7,7 @@ import isp.lab9.exercise1.ui.LoginJFrame;
  * @author radu.miron
  */
 public class Main {
-    public static void main(String[] args) {
-        new LoginJFrame();
-    }
+  public static void main(String[] args) {
+    new LoginJFrame();
+  }
 }
