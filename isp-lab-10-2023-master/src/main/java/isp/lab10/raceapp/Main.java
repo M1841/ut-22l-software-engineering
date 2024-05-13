@@ -13,6 +13,9 @@ public class Main {
 
     PlaySound playSound = new PlaySound();
 
+    Timer timer = new Timer();
+    timer.window_setup();
+
     semaphore.set_visible();
     try {
       semaphore.start_and_wait();
@@ -22,8 +25,12 @@ public class Main {
 
     carRace.start();
     playSound.playSound();
+    timer.start();
 
     carRace.join();
     playSound.stopSound();
+
+    timer.stopTimer();
+    timer.window_setup();
   }
 }

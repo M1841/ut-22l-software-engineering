@@ -1,15 +1,10 @@
 package isp.lab10.raceapp;
 
-import java.util.*;
 import javax.swing.*;
 
 public class Leaderboard {
-  private JFrame frame;
+  private JFrame frame = new JFrame("Leaderboard");
   private int spot = 1;
-
-  public Leaderboard() {
-    this.frame = new JFrame("Leaderboard");
-  }
 
   public void window_setup() {
     this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
