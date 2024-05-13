@@ -4,14 +4,14 @@ import java.io.*;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
-
 import javax.swing.table.AbstractTableModel;
+import isp.lab9.exercise1.ui.StockMarketJFrame;
 
 public class UserPortfolioQueryService extends AbstractTableModel {
   private String[] columns = new String[] { "Name", "Symbol", "Quantity", "Price per Unit", "Total Price" };
   private Map<String, Integer> symbols = new HashMap<>();
   private List<StockItem> items = new ArrayList<>();
-  private BigDecimal funds = BigDecimal.valueOf(0);
+  private BigDecimal funds = BigDecimal.valueOf(1000);
 
   public void refreshMarketData() throws IOException {
     items = YahooWebClient.get(
@@ -26,14 +26,19 @@ public class UserPortfolioQueryService extends AbstractTableModel {
     this.fireTableDataChanged();
   }
 
-  public void buyShares(String symbol, int quantity) {
-    symbols.put(symbol, quantity);
+  public void buyShares(String symbol, int quantity, StockMarketJFrame mainFrame) throws IOException {
+    BigDecimal price = getStockPrice(symbol).multiply(BigDecimal.valueOf(quantity));
 
-    try {
-      this.refreshMarketData();
-    } catch (IOException err) {
-      System.err.println(err);
+    funds = funds.subtract(price);
+
+    if (symbols.containsKey(symbol)) {
+      symbols.replace(symbol, symbols.get(symbol) + quantity);
+    } else {
+      symbols.put(symbol, quantity);
     }
+    refreshMarketData();
+    mainFrame.getPortfolioJPanel().getFunds().setText("Available funds: $" + funds.toPlainString());
+    mainFrame.getBuyJPanel().getAvailableFundsTextField().setText("$" + funds.toPlainString());
   }
 
   public BigDecimal getStockPrice(String symbol) throws IOException {

@@ -7,13 +7,9 @@ import java.util.logging.Logger;
 
 import javax.swing.*;
 
-/**
- * todo: implement portfolio panel; for each owned stock add symbol, quantity,
- * price per unit, total price of the position
- * it should look similar to the 'Market' panel
- */
 public class PortfolioJPanel extends JPanel {
   private StockMarketJFrame frame;
+  private JLabel funds;
 
   public PortfolioJPanel(StockMarketJFrame frame) {
     this.frame = frame;
@@ -23,7 +19,7 @@ public class PortfolioJPanel extends JPanel {
   private void initComponent() {
     setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-    JLabel funds = new JLabel("Available funds: $" + frame.getPortfolioService().getFunds().toPlainString());
+    funds = new JLabel("Available funds: $" + frame.getPortfolioService().getFunds().toPlainString());
 
     JTable table = new JTable();
     table.setModel(frame.getPortfolioService());
@@ -53,5 +49,9 @@ public class PortfolioJPanel extends JPanel {
             .log(Level.SEVERE, null, err);
       }
     }
+  }
+
+  public JLabel getFunds() {
+    return funds;
   }
 }

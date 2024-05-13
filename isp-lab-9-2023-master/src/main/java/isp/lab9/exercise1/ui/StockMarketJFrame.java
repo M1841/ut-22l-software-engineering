@@ -4,13 +4,10 @@
  */
 package isp.lab9.exercise1.ui;
 
-import isp.lab9.exercise1.services.UserPortfolio;
 import isp.lab9.exercise1.services.UserPortfolioQueryService;
 import isp.lab9.exercise1.services.StockMarketQueryService;
 import javax.swing.*;
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,7 +18,9 @@ import java.util.logging.Logger;
 public class StockMarketJFrame extends JFrame {
   private StockMarketQueryService marketService;
   private UserPortfolioQueryService portfolioService;
-  private UserPortfolio portfolio;
+
+  private PortfolioJPanel portfolioJPanel;
+  private BuyJPanel buyJPanel;
 
   /**
    * Creates new form StockMarketJFrame
@@ -31,12 +30,7 @@ public class StockMarketJFrame extends JFrame {
       marketService = new StockMarketQueryService();
       marketService.refreshMarketData();
 
-      portfolio = new UserPortfolio(new BigDecimal(1000), new TreeMap<>());
       portfolioService = new UserPortfolioQueryService();
-
-      portfolioService.buyShares("GOOG", 2);
-      portfolioService.buyShares("AAPL", 1);
-      portfolioService.buyShares("MSFT", 3);
     } catch (IOException ex) {
       Logger.getLogger(StockMarketJFrame.class.getName()).log(Level.SEVERE, null, ex);
     }
@@ -52,11 +46,15 @@ public class StockMarketJFrame extends JFrame {
   private void initComponents() {
     this.setSize(700, 400);
     this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-    // configure windows the tabs
+
     JTabbedPane tabs = new JTabbedPane();
     tabs.addTab("Market", new MarketJPanel(this));
-    tabs.addTab("UserPortfolio", new PortfolioJPanel(this));
-    tabs.addTab("Buy", new BuyJPanel(this));
+
+    portfolioJPanel = new PortfolioJPanel(this);
+    tabs.addTab("UserPortfolio", portfolioJPanel);
+
+    buyJPanel = new BuyJPanel(this);
+    tabs.addTab("Buy", buyJPanel);
     tabs.addTab("Sell", new SellJPanel());
 
     this.add(tabs);
@@ -70,7 +68,11 @@ public class StockMarketJFrame extends JFrame {
     return portfolioService;
   }
 
-  public UserPortfolio getPortfolio() {
-    return portfolio;
+  public PortfolioJPanel getPortfolioJPanel() {
+    return portfolioJPanel;
+  }
+
+  public BuyJPanel getBuyJPanel() {
+    return buyJPanel;
   }
 }

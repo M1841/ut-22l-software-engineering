@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 
 public class BuyJPanel extends JPanel {
   private StockMarketJFrame mainFrame;
+  private JTextField availableFundsTextField;
 
   public BuyJPanel(StockMarketJFrame mainFrame) {
     this.mainFrame = mainFrame;
@@ -23,7 +24,8 @@ public class BuyJPanel extends JPanel {
     buyPanel.setLayout(new GridLayout(10, 2));
 
     JLabel availableFundsLabel = new JLabel("Available funds:");
-    JTextField availableFundsTextField = new JTextField(mainFrame.getPortfolio().getCash().toPlainString() + " $");
+    availableFundsTextField = new JTextField(
+        "$" + mainFrame.getPortfolioService().getFunds().toPlainString());
     availableFundsTextField.setEditable(false);
 
     JLabel symbolLabel = new JLabel("Symbol:");
@@ -38,7 +40,7 @@ public class BuyJPanel extends JPanel {
     costTextField.setEditable(false);
 
     JButton buyButton = new JButton("Buy");
-    // todo: add event listener to 'Buy' button
+    buyButton.addActionListener(event -> buyShares(symbolComboBox, quantityTextField));
 
     JButton costButton = new JButton("Get cost");
     costButton
@@ -94,5 +96,29 @@ public class BuyJPanel extends JPanel {
           JOptionPane.ERROR_MESSAGE);
       Logger.getLogger(StockMarketJFrame.class.getName()).log(Level.SEVERE, null, ex);
     }
+  }
+
+  private void buyShares(JComboBox<String> symbolComboBox, JTextField quantityTextField) {
+    String symbol = (String) symbolComboBox.getSelectedItem();
+
+    try {
+      int quantity = Integer.parseInt(quantityTextField.getText());
+      if (mainFrame.getPortfolioService().getFunds().compareTo(BigDecimal.valueOf(quantity)) > 0) {
+        try {
+          mainFrame.getPortfolioService().buyShares(symbol, quantity, mainFrame);
+        } catch (IOException err) {
+          quantityTextField.setText("Server error! Try again later");
+          System.err.println(err);
+        }
+      } else {
+        quantityTextField.setText("Insufficient funds!");
+      }
+    } catch (NumberFormatException err) {
+      quantityTextField.setText("Invalid value!");
+    }
+  }
+
+  public JTextField getAvailableFundsTextField() {
+    return availableFundsTextField;
   }
 }
