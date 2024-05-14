@@ -4,6 +4,8 @@ import java.io.*;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.AbstractTableModel;
 import isp.lab9.exercise1.ui.StockMarketJFrame;
 
@@ -14,21 +16,24 @@ public class UserPortfolioQueryService extends AbstractTableModel {
   private BigDecimal funds = BigDecimal.valueOf(1000);
 
   public void refreshMarketData() throws IOException {
-    items = YahooWebClient.get(
-        symbols.keySet()
-            .toArray(new String[0]))
-        .stream()
-        .map(item -> {
-          item.setQuantity(symbols.get(item.getSymbol()));
-          return item;
-        })
-        .collect(Collectors.toList());
+    if (symbols.isEmpty()) {
+      items = new ArrayList<>();
+    } else {
+      items = YahooWebClient.get(
+          symbols.keySet()
+              .toArray(new String[0]))
+          .stream()
+          .map(item -> {
+            item.setQuantity(symbols.get(item.getSymbol()));
+            return item;
+          })
+          .collect(Collectors.toList());
+    }
     this.fireTableDataChanged();
   }
 
   public void buyShares(String symbol, int quantity, StockMarketJFrame mainFrame) throws IOException {
     BigDecimal price = getStockPrice(symbol).multiply(BigDecimal.valueOf(quantity));
-
     funds = funds.subtract(price);
 
     if (symbols.containsKey(symbol)) {
@@ -36,9 +41,30 @@ public class UserPortfolioQueryService extends AbstractTableModel {
     } else {
       symbols.put(symbol, quantity);
     }
-    refreshMarketData();
     mainFrame.getPortfolioJPanel().getFunds().setText("Available funds: $" + funds.toPlainString());
     mainFrame.getBuyJPanel().getAvailableFundsTextField().setText("$" + funds.toPlainString());
+    mainFrame.getSellJPanel().getFundsField().setText("$" + funds.toPlainString());
+    mainFrame.getSellJPanel().getSymbolSelect().setModel(
+        new DefaultComboBoxModel<>(mainFrame.getPortfolioService().getSymbols().keySet().toArray(new String[0])));
+    refreshMarketData();
+  }
+
+  public void sellShares(String symbol, int quantity, StockMarketJFrame frame) throws IOException {
+    BigDecimal earnings = getStockPrice(symbol).multiply(BigDecimal.valueOf(quantity));
+    funds = funds.add(earnings);
+
+    if (symbols.get(symbol) > quantity) {
+      symbols.replace(symbol, symbols.get(symbol) - quantity);
+    } else {
+      symbols.remove(symbol);
+    }
+
+    frame.getPortfolioJPanel().getFunds().setText("Available funds: $" + funds.toPlainString());
+    frame.getBuyJPanel().getAvailableFundsTextField().setText("$" + funds.toPlainString());
+    frame.getSellJPanel().getFundsField().setText("$" + funds.toPlainString());
+    frame.getSellJPanel().getSymbolSelect().setModel(
+        new DefaultComboBoxModel<>(frame.getPortfolioService().getSymbols().keySet().toArray(new String[0])));
+    refreshMarketData();
   }
 
   public BigDecimal getStockPrice(String symbol) throws IOException {
