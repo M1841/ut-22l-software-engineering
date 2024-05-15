@@ -32,7 +32,7 @@ public class UserPortfolioQueryService extends AbstractTableModel {
     this.fireTableDataChanged();
   }
 
-  public void buyShares(String symbol, int quantity, StockMarketJFrame mainFrame) throws IOException {
+  public void buyShares(String symbol, int quantity, StockMarketJFrame frame) throws IOException {
     BigDecimal price = getStockPrice(symbol).multiply(BigDecimal.valueOf(quantity));
     funds = funds.subtract(price);
 
@@ -41,11 +41,11 @@ public class UserPortfolioQueryService extends AbstractTableModel {
     } else {
       symbols.put(symbol, quantity);
     }
-    mainFrame.getPortfolioJPanel().getFunds().setText("Available funds: $" + funds.toPlainString());
-    mainFrame.getBuyJPanel().getAvailableFundsTextField().setText("$" + funds.toPlainString());
-    mainFrame.getSellJPanel().getFundsField().setText("$" + funds.toPlainString());
-    mainFrame.getSellJPanel().getSymbolSelect().setModel(
-        new DefaultComboBoxModel<>(mainFrame.getPortfolioService().getSymbols().keySet().toArray(new String[0])));
+    frame.getPortfolioJPanel().getFunds().setText("Available funds: $" + funds.toPlainString());
+    frame.getBuyJPanel().getAvailableFundsTextField().setText("$" + funds.toPlainString());
+    frame.getSellJPanel().getFundsField().setText("$" + funds.toPlainString());
+    frame.getSellJPanel().getSymbolSelect().setModel(
+        new DefaultComboBoxModel<>(frame.getPortfolioService().getSymbols().keySet().toArray(new String[0])));
     refreshMarketData();
   }
 
