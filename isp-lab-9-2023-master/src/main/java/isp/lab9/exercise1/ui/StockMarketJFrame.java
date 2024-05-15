@@ -21,6 +21,7 @@ public class StockMarketJFrame extends JFrame {
 
   private PortfolioJPanel portfolioJPanel;
   private BuyJPanel buyJPanel;
+  private SellJPanel sellJPanel;
 
   /**
    * Creates new form StockMarketJFrame
@@ -55,7 +56,8 @@ public class StockMarketJFrame extends JFrame {
 
     buyJPanel = new BuyJPanel(this);
     tabs.addTab("Buy", buyJPanel);
-    tabs.addTab("Sell", new SellJPanel());
+    sellJPanel = new SellJPanel(this);
+    tabs.addTab("Sell", sellJPanel);
 
     this.add(tabs);
   }
@@ -74,5 +76,9 @@ public class StockMarketJFrame extends JFrame {
 
   public BuyJPanel getBuyJPanel() {
     return buyJPanel;
+  }
+
+  public SellJPanel getSellJPanel() {
+    return sellJPanel;
   }
 }
